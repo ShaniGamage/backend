@@ -1,5 +1,6 @@
 //Shape of the data stored in DB
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm'
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm'
+import { Likes } from './likes'
 
 @Entity()
 export class Post {
@@ -12,6 +13,9 @@ export class Post {
     @Column()
     postType: string
 
+    @Column({default:0})
+    likes: number
+
     @Column()
     description: string
 
@@ -23,5 +27,8 @@ export class Post {
 
     @Column()
     createdAt: Date
+
+    @OneToMany(() => Likes, (like) => like.post)
+    likesRelation: Likes[]
 
 }

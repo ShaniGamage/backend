@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Put, Req } from '@nestjs/common';
 import { PostService } from './post.service';
 import { PostDto } from 'src/dto/post.dto';
 
@@ -20,13 +20,36 @@ export class PostController {
 
     @Get()
     async getHeapCodeStatistics() {
-        try{
+        try {
             const result = await this.postService.getPosts()
             return result
-        }catch(err){
+        } catch (err) {
             throw err
         }
-
     }
 
+    @Post('like')
+    async toggleLike(
+        @Body() body: { postId: number, userId: string },
+    ) {
+        console.log('Toggle like endpoint hit with body:', body);
+        try {
+            if (!body.postId || !body.userId) {
+                return {
+                    success: false,
+                    message: 'postId and userId are required'
+                };
+            }
+
+            const result = await this.postService.toggleLike(body.postId, body.userId);
+            return result;
+        } catch (err) {
+            console.error('Error in toggleLike controller:', err);
+            return {
+                success: false,
+                message: 'Internal server error',
+                error: err.message
+            };
+        }
+    }
 }
