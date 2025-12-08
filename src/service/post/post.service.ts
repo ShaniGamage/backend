@@ -123,4 +123,18 @@ export class PostService {
         });
         return !!like;
     }
+
+    async deletePost(postId: number, userId: string) {
+        try {
+            const post = await this.postRepo.findOne({ where: { id: postId ,userId:userId} });
+            if (!post) {
+                return { success: false, message: 'Post not found' };
+            }
+            await this.postRepo.remove(post);
+            return { success: true, message: 'Post deleted successfully' };
+        } catch (err) {
+            this.logger.error('Post deletion failed', err);
+            throw err;
+        }
+    }
 }

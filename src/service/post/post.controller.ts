@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Put, Req } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post, Put, Req } from '@nestjs/common';
 import { PostService } from './post.service';
 import { PostDto } from 'src/dto/post.dto';
 
@@ -50,6 +50,23 @@ export class PostController {
                 message: 'Internal server error',
                 error: err.message
             };
+        }
+    }
+
+    @Delete(':postId/user/:userId')
+    async deletePost(
+        @Req() req,
+    ) {
+
+        console.log('Delete post endipoint hit with params:',req.params)
+        try {
+            const postId = parseInt(req.params.postId);
+            const userId = req.params.userId;
+            const result = await this.postService.deletePost(postId, userId);
+            console.log('Delete post successfully:',result)
+            return result;
+        } catch (err) {
+            throw err;
         }
     }
 }

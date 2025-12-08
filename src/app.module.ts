@@ -5,6 +5,7 @@ import { SosModule } from './service/sos/sos.module'; // Import the MODULE
 import { ReportsModule } from './reports/reports.module';
 import { HarassmentReportModule } from './service/harassment-report/harassment-report.module';
 import { PostModule } from './service/post/post.module';
+import { HeatmapModule } from './service/heatmap/heatmap.module';
 // ... other imports
 
 @Module({
@@ -24,7 +25,7 @@ import { PostModule } from './service/post/post.module';
       autoLoadEntities: true,
     }),
     SosModule, 
-    ReportsModule, HarassmentReportModule,PostModule
+    ReportsModule, HarassmentReportModule,PostModule, HeatmapModule
   ],
   controllers: [],
   providers: [], 
