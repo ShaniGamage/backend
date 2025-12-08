@@ -178,6 +178,8 @@ export class HeatMapService {
             color,
             priority,
             incidentCount: incidentsInHex.length,
+            sosCount:sosIncidents.length,
+            harassmentCount:harassmentIncidents.length,
             weightedScore: Math.round(weightedCount * 10) / 10,
           },
           geometry: hex.geometry,
@@ -456,4 +458,6 @@ export class HeatMapService {
 
     return coordinates;
   }
+
+  
 }
