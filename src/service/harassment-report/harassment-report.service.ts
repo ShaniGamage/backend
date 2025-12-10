@@ -1,5 +1,7 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { request } from 'http';
+import { report } from 'process';
 import { HarassmentReportDto } from 'src/dto/harassment-report.dto';
 import { HarassmentReport } from 'src/models/harassment-report';
 import { Repository } from 'typeorm';
@@ -28,6 +30,25 @@ export class HarassmentReportService {
         }catch(error){
             this.logger.error('Harassment report saving failed',error)
             throw error
+        }
+    }
+
+    async getReports(vehicleNo:string){
+        try{
+            if(!vehicleNo){
+                throw new BadRequestException('Vehicle no is required')
+            }
+
+            const posts = await this.harassmentReportRepo.find({
+                where:{
+                    vehicleNumber: vehicleNo
+                }
+            })
+            return posts
+
+        }catch(e){
+            console.error(e)
+            throw new InternalServerErrorException('Something went wrong')
         }
     }
 }

@@ -1,4 +1,4 @@
-import { Body, Controller, Logger, Post } from '@nestjs/common';
+import { Body, Controller, Get, Logger, Post, Query } from '@nestjs/common';
 import { HarassmentReportDto } from 'src/dto/harassment-report.dto';
 import { HarassmentReportService } from './harassment-report.service';
 
@@ -21,5 +21,15 @@ export class HarassmentReportController {
             this.logger.error('report saving failed',error)
             throw error
         }
+    }
+
+    @Get()
+    async getReports(@Query('vehicleNo') vehicleNo:string){
+        if(!vehicleNo){
+            return{message:"Vehicle number is required"}
+        }
+
+        const results = await this.harassmentReportService.getReports(vehicleNo)
+        return results
     }
 }
