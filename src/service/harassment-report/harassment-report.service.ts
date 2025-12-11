@@ -1,7 +1,5 @@
 import { BadRequestException, Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { request } from 'http';
-import { report } from 'process';
 import { HarassmentReportDto } from 'src/dto/harassment-report.dto';
 import { HarassmentReport } from 'src/models/harassment-report';
 import { Repository } from 'typeorm';

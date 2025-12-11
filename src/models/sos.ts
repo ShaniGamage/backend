@@ -1,5 +1,6 @@
 //Shape of the data stored in DB
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm'
+import { Contacts } from './contacts'
 // import { Contacts } from './contacts'
 
 @Entity()
@@ -24,8 +25,5 @@ export class Sos {
 
     @Column()
     createdAt: Date;
-
-    // @OneToMany(() => Contacts, (contact) => contact.userId)
-    // contacts: Contacts[]
 
 }

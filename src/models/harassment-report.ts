@@ -22,6 +22,15 @@ export class HarassmentReport {
     vehicleNumber: string
 
     @Column({nullable:true})
+    vehicleType: string
+
+    @Column({nullable:true})
+    vehicleColor: string
+
+    @Column({nullable:true})
+    vehicleModel: string
+
+    @Column({nullable:true})
     harassmentType: string
 
     @Column({nullable:true})

@@ -4,6 +4,9 @@ export class HarassmentReportDto {
     latitude: number;
     longitude: number;
     vehicleNumber?: string;
+    vehicleType?: string;
+    vehicleColor?: string;
+    vehicleModel?: string;
     harassmentType: string;
     extraInfo?: string;
     anonymous?: boolean;
