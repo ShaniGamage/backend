@@ -68,6 +68,27 @@ export class HarassmentReportService {
         }
     }
 
+    async editReport(data: HarassmentReportDto){
+        try{
+            const report = await this.harassmentReportRepo.findOne({
+                where:
+                {
+                    id: data.id,
+                    userId: data.userId
+                }
+            })
+            if(!report){
+                return { success: true, message:'report not found'}
+            }
+            Object.assign(report,data)
+            await this.harassmentReportRepo.save(report)
+            return {success: true, message:'report updated successfully'}
+        } catch(err){
+            console.log(err)
+            return{ success:false, message: 'something went wrong'}
+        }
+    }
+
     async deleteReport(reportId: number, userId: string) {
         try {
             const report = await this.harassmentReportRepo.findOne({ where: { id: reportId, userId: userId } });

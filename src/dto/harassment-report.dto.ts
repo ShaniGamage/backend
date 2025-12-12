@@ -1,4 +1,5 @@
 export class HarassmentReportDto {
+    id:number;
     userId?: string;
     location:string;
     latitude: number;

@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Logger, Post, Query, Req } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Logger, Post, Put, Query, Req } from '@nestjs/common';
 import { HarassmentReportDto } from 'src/dto/harassment-report.dto';
 import { HarassmentReportService } from './harassment-report.service';
 
@@ -15,10 +15,10 @@ export class HarassmentReportController {
 
         try {
             const result = await this.harassmentReportService.saveHarassmentReport(body)
-            this.logger.log('Harassment report saved successfully')
+            console.log('Harassment report saved successfully')
             return result
         } catch (error) {
-            this.logger.error('report saving failed', error)
+            console.error('report saving failed', error)
             throw error
         }
     }
@@ -47,19 +47,31 @@ export class HarassmentReportController {
         }
     }
 
-    @Delete(':reportId/user/:userId')
-        async deletePost(
-            @Req() req,
-        ) {
-            console.log('Delete report endipoint hit with params:',req.params)
-            try {
-                const reportId = parseInt(req.params.reportId);
-                const userId = req.params.userId;
-                const result = await this.harassmentReportService.deleteReport(reportId, userId);
-                console.log('Delete report successfully:',result)
-                return result;
-            } catch (err) {
-                throw err;
-            }
+    @Put('')
+    async editReport(@Body() body: HarassmentReportDto) {
+        console.log('report editing endpoint hit')
+        try {
+           const result = await this.harassmentReportService.editReport(body)
+           return result
+        }catch(err){
+             console.error('Error updating report',err)
+             throw err  
         }
+    }
+
+    @Delete(':reportId/user/:userId')
+    async deleteReport(
+        @Req() req,
+    ) {
+        console.log('Delete report endipoint hit with params:', req.params)
+        try {
+            const reportId = parseInt(req.params.reportId);
+            const userId = req.params.userId;
+            const result = await this.harassmentReportService.deleteReport(reportId, userId);
+            console.log('Delete report successfully:', result)
+            return result;
+        } catch (err) {
+            throw err;
+        }
+    }
 }
