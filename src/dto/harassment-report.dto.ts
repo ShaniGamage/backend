@@ -12,5 +12,4 @@ export class HarassmentReportDto {
     anonymous?: boolean;
     image?: string;
     createdAt:Date;
-
 }

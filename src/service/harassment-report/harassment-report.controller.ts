@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Logger, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Logger, Post, Query, Req } from '@nestjs/common';
 import { HarassmentReportDto } from 'src/dto/harassment-report.dto';
 import { HarassmentReportService } from './harassment-report.service';
 
@@ -6,30 +6,60 @@ import { HarassmentReportService } from './harassment-report.service';
 export class HarassmentReportController {
     private readonly logger = new Logger(HarassmentReportController.name)
 
-    constructor(private harassmentReportService: HarassmentReportService){}
+    constructor(private harassmentReportService: HarassmentReportService) { }
 
     @Post('')
-    async createHarassmentReport(@Body() body:HarassmentReportDto){
+    async createHarassmentReport(@Body() body: HarassmentReportDto) {
         console.log('harassment report endpoint hit')
         this.logger.log('received payload:', JSON.stringify(body))
 
-        try{
+        try {
             const result = await this.harassmentReportService.saveHarassmentReport(body)
             this.logger.log('Harassment report saved successfully')
             return result
-        }catch(error){
-            this.logger.error('report saving failed',error)
+        } catch (error) {
+            this.logger.error('report saving failed', error)
             throw error
         }
     }
 
     @Get()
-    async getReports(@Query('vehicleNo') vehicleNo:string){
-        if(!vehicleNo){
-            return{message:"Vehicle number is required"}
+    async getReports(@Query('vehicleNo') vehicleNo: string) {
+        if (!vehicleNo) {
+            return { message: "Vehicle number is required" }
         }
 
         const results = await this.harassmentReportService.getReports(vehicleNo)
         return results
     }
+
+    @Get('user')
+    async getReportsByUserId(@Query('userId') userId: string) {
+        try {
+            if (!userId) {
+                return { message: "userId is required" }
+            }
+            const results = await this.harassmentReportService.getReportsByUserId(userId)
+            return results
+        } catch (err) {
+            console.error('report saving failed', err)
+            throw err
+        }
+    }
+
+    @Delete(':reportId/user/:userId')
+        async deletePost(
+            @Req() req,
+        ) {
+            console.log('Delete report endipoint hit with params:',req.params)
+            try {
+                const reportId = parseInt(req.params.reportId);
+                const userId = req.params.userId;
+                const result = await this.harassmentReportService.deleteReport(reportId, userId);
+                console.log('Delete report successfully:',result)
+                return result;
+            } catch (err) {
+                throw err;
+            }
+        }
 }
