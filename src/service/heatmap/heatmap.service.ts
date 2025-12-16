@@ -47,7 +47,7 @@ export class HeatMapService {
       const ninetyDaysAgo = new Date();
       ninetyDaysAgo.setDate(ninetyDaysAgo.getDate() - 90);
 
-      // Query SOS reports - IMPORTANT: Using "longitude" and "latitude" column names
+      // Query SOS reports 
       const sosIncidents = await this.sosRepo
         .createQueryBuilder('sos')
         .select(['sos.id', 'sos.latitude', 'sos.longitude', 'sos.createdAt'])
@@ -63,7 +63,7 @@ export class HeatMapService {
         .limit(500)
         .getRawMany();
 
-      // Query Harassment reports - IMPORTANT: Using "longitude" and "latitude" column names
+      // Query Harassment reports
       const harassmentIncidents = await this.harassmentRepo
         .createQueryBuilder('harassment')
         .select(['harassment.id', 'harassment.latitude', 'harassment.longitude', 'harassment.createdAt'])
@@ -109,9 +109,9 @@ export class HeatMapService {
         };
       }
 
-      this.logger.log(`🔍 Processing ${allIncidents.length} total incidents`);
+      this.logger.log(`Processing ${allIncidents.length} total incidents`);
 
-      // Create hexagonal grid (each hex = ~400m diameter)
+      // Create hexagonal grid 
       const bbox: [number, number, number, number] = [
         bounds.minLng,
         bounds.minLat,
@@ -136,7 +136,7 @@ export class HeatMapService {
           }
         });
 
-        // Weight recent incidents higher (more dangerous)
+        // Weight recent incidents higher 
         const now = new Date();
         const weightedCount = incidentsInHex.reduce((sum, incident) => {
           const daysAgo =
@@ -155,19 +155,19 @@ export class HeatMapService {
 
         if (weightedCount >= 5) {
           riskLevel = 'high';
-          color = '#FF4444'; // Red
+          color = '#FF4444';
           priority = 4;
         } else if (weightedCount >= 2) {
           riskLevel = 'medium';
-          color = '#FF9800'; // Orange
+          color = '#FF9800'; 
           priority = 3;
         } else if (weightedCount >= 0.5) {
           riskLevel = 'low';
-          color = '#FFC107'; // Yellow
+          color = '#FFC107'; 
           priority = 2;
         } else {
           riskLevel = 'safe';
-          color = '#4CAF50'; // Green
+          color = '#4CAF50';
           priority = 1;
         }
 
@@ -186,7 +186,7 @@ export class HeatMapService {
         };
       });
 
-      // Only return zones with some risk (or all if zoomed in)
+      // Only return zones with some risk
       const filteredZones = zones.filter(
         zone => zone.properties.incidentCount > 0 || zones.length < 30
       );
@@ -249,10 +249,8 @@ export class HeatMapService {
 
       this.logger.log(`Found ${dangerZones.length} danger zones to avoid`);
 
-      // Option 1: Use OpenRouteService for real routing
+      // Use OpenRouteService for real routing
       const ORS_API_KEY = process.env.OPENROUTESERVICE_API_KEY;
-
-      this.logger.log(`API Key exists: ${!!ORS_API_KEY}`);
 
       if (ORS_API_KEY) {
         try {
@@ -350,7 +348,6 @@ export class HeatMapService {
             throw new Error('All routes were invalid');
           }
 
-          // Sort by safety (lowest danger score first)
           // Sort by safety (lowest danger score first)
           processedRoutes.sort((a, b) => a.dangerScore - b.dangerScore);
 

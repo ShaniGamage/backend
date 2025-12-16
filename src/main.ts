@@ -12,7 +12,7 @@ async function bootstrap() {
 
   await app.listen(3001, '0.0.0.0');
   console.log('Backend running on http://localhost:3001');
-  console.log('Mobile access: http://172.16.252.85:3001');
+  console.log('Mobile access: http://172.16.253.11:3001');
 }
 
 bootstrap();
