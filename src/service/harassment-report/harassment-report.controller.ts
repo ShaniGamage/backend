@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, Logger, Post, Put, Query, Req } from '@n
 import { HarassmentReportDto } from 'src/dto/harassment-report.dto';
 import { HarassmentReportService } from './harassment-report.service';
 
-@Controller('report-harassment')
+@Controller('api/report-harassment')
 export class HarassmentReportController {
     private readonly logger = new Logger(HarassmentReportController.name)
 
