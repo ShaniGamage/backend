@@ -13,17 +13,21 @@ import { HeatmapModule } from './service/heatmap/heatmap.module';
       isGlobal: true,
     }),
     TypeOrmModule.forRoot({
-      type: 'postgres', 
-      url: process.env.DB_HOST ,
+      type: 'postgres',
+      url: process.env.DB_HOST,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      synchronize: true, 
+      synchronize: true,
       autoLoadEntities: true,
-      ssl:{ rejectUnauthorized:false}
+      ssl: { rejectUnauthorized: false },
+      extra: {
+        keepAlive: true,
+        idleTimeoutMillis: 30000,
+      }
     }),
-    SosModule, 
-    ReportsModule, HarassmentReportModule,PostModule, HeatmapModule
+    SosModule,
+    ReportsModule, HarassmentReportModule, PostModule, HeatmapModule
   ],
   controllers: [],
-  providers: [], 
+  providers: [],
 })
-export class AppModule {}
+export class AppModule { }
