@@ -30,9 +30,11 @@
     "@turf/turf": "^7.3.1",
     "@vonage/server-sdk": "^3.25.1",
     "axios": "^1.13.2",
+    "express": "^5.2.1",
     "jsonwebtoken": "^9.0.2",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
+    "serverless-http": "^4.0.0",
     "twilio": "^5.10.6",
     "typeorm": "^0.3.27"
   },
