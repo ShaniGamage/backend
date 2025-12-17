@@ -1,7 +1,7 @@
 import { Controller, Post, Body, Get } from '@nestjs/common';
 import { HeatMapService } from './heatmap.service';
 
-@Controller('api/safe-route')
+@Controller('safe-route')
 export class HeatMapController {
   constructor(private readonly safeRouteService: HeatMapService) {}
 

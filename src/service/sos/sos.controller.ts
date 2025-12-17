@@ -4,7 +4,7 @@ import { SosDto } from 'src/dto/sos.dto';
 import { SosService } from './sos.service';
 import { ContactsDto } from 'src/dto/contacts';
 
-@Controller('api/sos')
+@Controller('sos')
 export class SosController {
     private readonly logger = new Logger(SosController.name);
 
