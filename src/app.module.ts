@@ -6,6 +6,7 @@ import { ReportsModule } from './reports/reports.module';
 import { HarassmentReportModule } from './service/harassment-report/harassment-report.module';
 import { PostModule } from './service/post/post.module';
 import { HeatmapModule } from './service/heatmap/heatmap.module';
+// ... other imports
 
 @Module({
   imports: [
@@ -15,14 +16,14 @@ import { HeatmapModule } from './service/heatmap/heatmap.module';
     TypeOrmModule.forRoot({
       type: 'postgres',
       url: process.env.DB_HOST,
-      entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      synchronize: true,
       autoLoadEntities: true,
+      synchronize: true,
       ssl: { rejectUnauthorized: false },
       extra: {
-        keepAlive: true,
+        max: 5,
         idleTimeoutMillis: 30000,
-      }
+        connectionTimeoutMillis: 2000,
+      },
     }),
     SosModule,
     ReportsModule, HarassmentReportModule, PostModule, HeatmapModule

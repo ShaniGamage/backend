@@ -2,7 +2,7 @@ import { Controller, Get, UseGuards, Req } from '@nestjs/common';
 import { AuthGuard } from '../auth/auth.guard';
 import { RolesGuard } from '../auth/role.guard';
 
-@Controller('api/reports')
+@Controller('reports')
 export class ReportsController {
   
   // Test endpoint - no auth required
